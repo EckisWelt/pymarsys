@@ -76,6 +76,7 @@ class SyncConnection(BaseConnection):
     """
     def __init__(self, username, secret, uri=EMARSYS_URI):
         super().__init__(username, secret, uri)
+        self.s = requests.Session()
 
     def make_call(self,
                   method,
@@ -101,7 +102,7 @@ class SyncConnection(BaseConnection):
 
         url = urljoin(self.uri, endpoint)
         headers = self.build_headers(headers)
-        response = requests.request(
+        response = self.s.request(
             method,
             url,
             headers=headers,
@@ -161,7 +162,7 @@ class AsyncConnection(BaseConnection):
         ) as response:
             try:
                 response.raise_for_status()
-            except aiohttp.errors.HttpProcessingError as err:
+            except aiohttp.ClientConnectionError as err:
                 raise ApiCallError(
                     'Error message: "{}" \n Error details: "{}"'.format(
                         err,
