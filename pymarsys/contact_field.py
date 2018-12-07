@@ -1,3 +1,4 @@
+from urllib.parse import urljoin
 from .base_endpoint import BaseEndpoint
 
 
@@ -105,11 +106,7 @@ class ContactField(BaseEndpoint):
         }
         """
         if translate_id:
-            query_endpoint = '{}/{}/{}'.format(
-                self.endpoint,
-                'translate',
-                translate_id
-            )
+            query_endpoint = urljoin(self.endpoint, 'translate/{}/'.format(translate_id))
         else:
             query_endpoint = str(self.endpoint)
 
@@ -142,13 +139,9 @@ class ContactField(BaseEndpoint):
             'replyText': 'OK'
         }
         """
-        query_endpoint = '{}/{}/{}'.format(self.endpoint, list_id, 'choice')
+        query_endpoint = urljoin(self.endpoint, '{}/choice'.format(list_id))
         if translate_id:
-            query_endpoint = '{}/{}/{}'.format(
-                query_endpoint,
-                'translate',
-                translate_id
-            )
+            query_endpoint = urljoin(query_endpoint, 'translate/{}/'.format(translate_id))
 
         return self.connection.make_call(
             'GET',

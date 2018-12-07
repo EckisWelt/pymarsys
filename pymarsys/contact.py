@@ -1,4 +1,5 @@
 from .base_endpoint import BaseEndpoint
+from urllib.parse import urljoin
 
 
 class Contact(BaseEndpoint):
@@ -144,7 +145,7 @@ class Contact(BaseEndpoint):
             'replyText': 'OK'
         }
         """
-        query_endpoint = '{}/{}/'.format(self.endpoint, 'query')
+        query_endpoint = urljoin(self.endpoint, 'query/')
         params = {
             'return': field_id_to_return,
         }
@@ -221,7 +222,7 @@ class Contact(BaseEndpoint):
             'replyText': 'OK'
         }
         """
-        query_endpoint = '{}/{}/'.format(self.endpoint, 'getdata')
+        query_endpoint = urljoin(self.endpoint, 'getdata/')
         payload = {
             'keyId': key_id,
             'keyValues': key_values,
@@ -291,7 +292,7 @@ class Contact(BaseEndpoint):
             'replyText': 'OK'
         }
         """
-        query_endpoint = '{}/{}/'.format(self.endpoint, 'getcontacthistory')
+        query_endpoint = urljoin(self.endpoint, 'getcontacthistory/')
         payload = {
             'contacts': contacts,
         }
@@ -367,7 +368,7 @@ class Contact(BaseEndpoint):
             'replyText': 'OK'
         }
         """
-        query_endpoint = '{}/{}/'.format(self.endpoint, 'checkids')
+        query_endpoint = urljoin(self.endpoint, 'checkids/')
 
         payload = {
             'key_id': key_id,
@@ -517,7 +518,7 @@ class Contact(BaseEndpoint):
         >>> client.contacts.delete({3: 'squirrel1@squirrelmail.com'})
         {'data': '', 'replyCode': 0, 'replyText': 'OK'}
         """
-        query_endpoint = '{}/{}/'.format(self.endpoint, 'delete')
+        query_endpoint = urljoin(self.endpoint, 'delete/')
         payload = dict(contact)
 
         if key_id:
