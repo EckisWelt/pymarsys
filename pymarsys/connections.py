@@ -8,6 +8,7 @@ import uuid
 
 import aiohttp
 import requests
+from requests.adapters import HTTPAdapter
 
 EMARSYS_URI = 'https://api.emarsys.net/'
 
@@ -77,6 +78,7 @@ class SyncConnection(BaseConnection):
     def __init__(self, username, secret, uri=EMARSYS_URI):
         super().__init__(username, secret, uri)
         self.s = requests.Session()
+        self.s.mount('https://', HTTPAdapter(max_retries = 3, pool_maxsize = 5))
 
     def make_call(self,
                   method,
