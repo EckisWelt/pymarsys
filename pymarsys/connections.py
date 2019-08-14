@@ -66,6 +66,7 @@ class BaseConnection(ABC):
         http_headers = {
             'X-WSSE': wsse_header,
             'Content-Type': 'application/json',
+            'Accept-Encoding': 'gzip',
             **other_http_headers,
         }
         return http_headers
